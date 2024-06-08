@@ -6,9 +6,6 @@ const taskSchema = new Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-  },
   taskType: {
     type: String,
     enum: ["Exercise", "Hifz", "Coding", "Writing", "Hadees", "Piano"],

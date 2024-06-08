@@ -14,19 +14,44 @@ tasksRouter.get("/", async (request, response) => {
 });
 
 tasksRouter.post("/", async (request, response) => {
-  const { taskType } = request.body;
+  const body = request.body;
 
-  switch (taskType) {
+  switch (body.taskType) {
     case "exercise":
-      response.json({ message: "try exercising" });
+      const exerciseToSave = new Exercise({
+        image: body.image,
+        description: body.description,
+        recorded: body.recorded,
+      });
+
+      const exerciseTask = await exerciseToSave.save();
+      const taskToSave = new Task({
+        name: "exercise",
+        taskType: "Exercise",
+        proof: exerciseTask.id,
+      });
+
+      await taskToSave.save();
+
+      response
+        .status(200)
+        .json({ message: "Saved exercise task successfully" });
+
+      break;
     case "coding":
       response.json({ message: "try coding" });
+      break;
     case "piano":
       response.json({ message: "try pianonig" });
+      break;
     case "hadees":
       response.json({ message: "try hadeesing" });
+      break;
     case "hifz":
       response.json({ message: "try hifzing" });
+      break;
+    default:
+      response.json({ message: "not recognized" });
   }
 });
 

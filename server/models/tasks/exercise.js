@@ -9,6 +9,9 @@ const exerciseSchema = new Schema({
   recorded: {
     type: Boolean,
   },
+  description :{
+    type: String
+  },
   createdAt: {
     type: Date,
     default: Date.now,
